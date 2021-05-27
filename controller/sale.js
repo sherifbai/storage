@@ -2,10 +2,20 @@ const Sale = require('../models/sale')
 const ProductCount = require('../models/productsCount')
 const InvoiceProduct = require('../models/invoiceProduct')
 
+const {validationResult} = require('express-validator')
+
 exports.addSale = async (req, res, next) => {
     const productId = req.body.productId
     const newQuantity = req.body.quantity
     let oldQuantity
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const error = new Error('Ошибка при валидации!')
+        error.statusCode = 422
+        throw error
+    }
 
     try{
         const productCount = await ProductCount.findOne({ productId: productId })
