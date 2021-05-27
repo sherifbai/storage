@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const {body} = require('express-validator')
 
+const isAuth = require('../middleware/isAuth')
 const invoiceProductController = require('../controller/invoiceProduct')
 
 const router = Router()
@@ -28,7 +29,7 @@ router.post('/', [
         .isNumeric()
         .not()
         .isEmpty(),
-], invoiceProductController.addInvoiceProduct)
+], isAuth, invoiceProductController.addInvoiceProduct)
 
 
 router.put('/:id', [
@@ -54,9 +55,9 @@ router.put('/:id', [
         .isNumeric()
         .not()
         .isEmpty(),
-], invoiceProductController.updateInvoiceProduct)
+], isAuth, invoiceProductController.updateInvoiceProduct)
 
 
-router.delete('/:id', invoiceProductController.deleteInvoiceProduct)
+router.delete('/:id', isAuth, invoiceProductController.deleteInvoiceProduct)
 
 module.exports = router
