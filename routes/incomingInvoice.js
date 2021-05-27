@@ -11,48 +11,41 @@ router.post('/', [
         .isLength({min: 5})
         .not()
         .isEmpty(),
-    body('barcode')
-        .trim()
-        .isLength({min: 5})
-        .not()
-        .isEmpty(),
-    body('amount')
+    body('invoiceNumber')
         .isNumeric()
         .not()
         .isEmpty(),
-    body('unit')
+    body('firm')
         .trim()
         .not()
         .isEmpty(),
-    body('pricePerUnit')
+    body('contractAmount')
         .isNumeric()
         .not()
         .isEmpty(),
 ], incomingInvoiceController.addIncomingInvoice)
+
+
 router.put('/:id',[
     body('name')
         .trim()
         .isLength({min: 5})
         .not()
         .isEmpty(),
-    body('barcode')
-        .trim()
-        .isLength({min: 5})
-        .not()
-        .isEmpty(),
-    body('amount')
+    body('invoiceNumber')
         .isNumeric()
         .not()
         .isEmpty(),
-    body('unit')
+    body('firm')
         .trim()
         .not()
         .isEmpty(),
-    body('pricePerUnit')
+    body('contractAmount')
         .isNumeric()
         .not()
         .isEmpty(),
 ], incomingInvoiceController.updateIncomingInvoice)
+
 router.delete('/:id', incomingInvoiceController.deleteIncomingInvoice)
 
 module.exports = router
