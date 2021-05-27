@@ -73,6 +73,13 @@ exports.updateInvoiceProduct = async (req, res, next) => {
     const updatedUnit = req.body.unit
     const updatedPricePerUnit = req.body.pricePerUnit
 
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const error = new Error('Провальная валидация')
+        error.statusCode = 422
+        throw error
+    }
     try {
         const invoiceProduct = await InvoiceProduct.findById(invoiceProductId)
 

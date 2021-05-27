@@ -19,7 +19,20 @@ router.post('/', [
     body('pricePerUnit')
         .isNumeric(),
 ], incomingInvoiceController.addIncomingInvoice)
-router.put('/:id', incomingInvoiceController.updateIncomingInvoice)
+router.put('/:id',[
+    body('name')
+        .trim()
+        .isLength({min: 5}),
+    body('barcode')
+        .trim()
+        .isLength({min: 5}),
+    body('amount')
+        .isNumeric(),
+    body('unit')
+        .trim(),
+    body('pricePerUnit')
+        .isNumeric(),
+], incomingInvoiceController.updateIncomingInvoice)
 router.delete('/:id', incomingInvoiceController.deleteIncomingInvoice)
 
 module.exports = router
