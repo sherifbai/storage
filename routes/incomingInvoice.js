@@ -46,6 +46,7 @@ router.put('/:id',[
         .isEmpty(),
 ], incomingInvoiceController.updateIncomingInvoice)
 
+
 router.delete('/:id', incomingInvoiceController.deleteIncomingInvoice)
 
 module.exports = router

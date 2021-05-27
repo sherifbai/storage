@@ -1,10 +1,19 @@
 const IncomingInvoice = require('../models/incomingInvoice')
+const {validationResult} = require('express-validator')
 
 exports.addIncomingInvoice = async (req, res, next) => {
     const name = req.body.name
     const invoiceNumber = req.body.invoiceNumber
     const firm = req.body.firm
     const contractAmount = req.body.contractAmount
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const error = new Error('Ошибка при валидации!')
+        error.statusCode = 422
+        throw error
+    }
 
     try {
         const incomingInvoice = new IncomingInvoice({
@@ -36,6 +45,14 @@ exports.updateIncomingInvoice = async (req, res, next) => {
     const updatedInvoiceNumber = req.body.invoiceNumber
     const updatedFirm = req.body.firm
     const updatedContractAmount = req.body.contractAmount
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        const error = new Error('Ошибка при валидации!')
+        error.statusCode = 422
+        throw error
+    }
 
     try {
         const incomingInvoice = await IncomingInvoice.findById(incomingInvoiceId)
