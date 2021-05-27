@@ -3,6 +3,8 @@ const IncomingInvoice = require('../models/incomingInvoice')
 const ProductsCount = require('../models/productsCount')
 const Sale = require('../models/sale')
 
+const {validationResult} = require('express-validator')
+
 exports.addInvoiceProduct = async (req, res, next) => {
     const name = req.body.name
     const barcode = req.body.barcode
@@ -10,6 +12,14 @@ exports.addInvoiceProduct = async (req, res, next) => {
     const unit = req.body.unit
     const pricePerUnit = req.body.pricePerUnit
     const incomingInvoiceId = req.body.incomingInvoiceId
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+       const error = new Error('Провальная валидация')
+       error.statusCode = 422
+       throw error
+    }
 
     try {
         const incomingInvoice = await IncomingInvoice.findById(incomingInvoiceId)

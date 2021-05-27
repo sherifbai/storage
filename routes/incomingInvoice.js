@@ -5,7 +5,20 @@ const incomingInvoiceController = require('../controller/incomingInvoice')
 
 const router = Router()
 
-router.post('/', incomingInvoiceController.addIncomingInvoice)
+router.post('/', [
+    body('name')
+        .trim()
+        .isLength({min: 5}),
+    body('barcode')
+        .trim()
+        .isLength({min: 5}),
+    body('amount')
+        .isNumeric(),
+    body('unit')
+        .trim(),
+    body('pricePerUnit')
+        .isNumeric(),
+], incomingInvoiceController.addIncomingInvoice)
 router.put('/:id', incomingInvoiceController.updateIncomingInvoice)
 router.delete('/:id', incomingInvoiceController.deleteIncomingInvoice)
 
