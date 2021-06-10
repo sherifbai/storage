@@ -9,7 +9,7 @@ const saleRouter = require('./routes/sale')
 
 const app = express()
 
-const url = "mongodb+srv://Sherif:5P86BeLIEsytx1Xg@cluster0.qwr9u.mongodb.net/storage_restapi?retryWrites=true&w=majority"
+const url = "mongodb+srv://Sherif:rAzCmDang1ZCsYnc@cluster0.qwr9u.mongodb.net/course-app-api?retryWrites=true&w=majority"
 
 
 app.use(bodyParser.json())
