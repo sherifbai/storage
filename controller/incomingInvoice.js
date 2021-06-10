@@ -129,3 +129,28 @@ exports.getIncomingInvoices = async (req, res, next) => {
         next(error)
     }
 }
+
+
+exports.getIncomingInvoice = async (req, res, next) => {
+    const incomingInvoiceId = req.params.incomingInvoiceId
+
+    try {
+        const incomingInvoice = await IncomingInvoice.findById(incomingInvoiceId)
+
+        if (!incomingInvoice) {
+            const error = new Error("Данные не найдены!")
+            error.statusCode = 404
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: incomingInvoice
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}

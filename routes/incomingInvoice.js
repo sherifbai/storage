@@ -9,6 +9,7 @@ const incomingInvoiceController = require('../controller/incomingInvoice')
 const router = Router()
 
 
+router.get('/:incomingInvoiceId', isAuth, incomingInvoiceController.getIncomingInvoice)
 router.get('/', isAuth, incomingInvoiceController.getIncomingInvoices)
 router.post('/add', [
     body('name')

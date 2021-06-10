@@ -68,7 +68,7 @@ exports.login = async (req, res, next) => {
                 userId: user._id.toString()
             },
             "Sherif'sSecretKey",
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         )
         res.status(200).json({
             token: token,
