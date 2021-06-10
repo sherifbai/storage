@@ -1,8 +1,10 @@
 const {Router} = require('express')
 const {body} = require('express-validator')
 
+
 const isAuth = require('../middleware/isAuth')
 const saleController = require('../controller/sale')
+
 
 const router = Router()
 
