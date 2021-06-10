@@ -112,3 +112,20 @@ exports.deleteIncomingInvoice = async (req, res, next) => {
         next(error)
     }
 }
+
+
+exports.getIncomingInvoices = async (req, res, next) => {
+    try {
+        const incomingInvoices = await IncomingInvoice.find()
+
+        res.status(200).json({
+            success: true,
+            data: incomingInvoices
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
