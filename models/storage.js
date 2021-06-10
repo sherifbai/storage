@@ -8,6 +8,6 @@ const storageSchema = new Schema({
     address: {
         type: String,
     }
-})
+}, { timestamps: true })
 
 module.exports = model('Storage', storageSchema)

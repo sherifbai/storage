@@ -13,6 +13,6 @@ const saleSchema = new Schema({
     totalAmount: {
         type: Number
     }
-})
+}, { timestamps: true })
 
 module.exports = model('Sale', saleSchema)

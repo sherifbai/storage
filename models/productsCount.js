@@ -14,6 +14,6 @@ const productsCountSchema = new Schema({
         type: Number,
         default: 0
     }
-})
+}, { timestamps: true })
 
 module.exports = model('productsCount', productsCountSchema)

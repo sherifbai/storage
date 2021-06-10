@@ -26,6 +26,6 @@ const invoiceProduct = new Schema({
         ref: 'incomingInvoice',
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = model('invoiceProduct', invoiceProduct)

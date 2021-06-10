@@ -25,6 +25,6 @@ const incomingInvoice = new Schema({
         type: Number,
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = model('incomingInvoice', incomingInvoice)
