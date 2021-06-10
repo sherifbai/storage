@@ -6,7 +6,9 @@ const invoiceProductController = require('../controller/invoiceProduct')
 
 const router = Router()
 
-router.post('/', [
+router.get('/',isAuth , invoiceProductController.getInvoiceProducts)
+
+router.post('/add', [
     body('name')
         .trim()
         .isLength({min: 5})
@@ -32,7 +34,7 @@ router.post('/', [
 ], isAuth, invoiceProductController.addInvoiceProduct)
 
 
-router.put('/:id', [
+router.put('/update/:id', [
     body('name')
         .trim()
         .isLength({min: 5})
@@ -58,6 +60,6 @@ router.put('/:id', [
 ], isAuth, invoiceProductController.updateInvoiceProduct)
 
 
-router.delete('/:id', isAuth, invoiceProductController.deleteInvoiceProduct)
+router.delete('/delete/:id', isAuth, invoiceProductController.deleteInvoiceProduct)
 
 module.exports = router

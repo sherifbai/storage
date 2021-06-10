@@ -9,7 +9,7 @@ const saleRouter = require('./routes/sale')
 
 const app = express()
 
-const url = "mongodb+srv://Sherif:rAzCmDang1ZCsYnc@cluster0.qwr9u.mongodb.net/storage?retryWrites=true&w=majority"
+const url = "mongodb+srv://Sherif:rAzCmDang1ZCsYnc@cluster0.qwr9u.mongodb.net/storage_restapi?retryWrites=true&w=majority"
 
 
 app.use(bodyParser.json())
@@ -35,7 +35,7 @@ app.use(function (error, req, res, next) {
 });
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}).then(result => {
-    app.listen(8080)
+    app.listen(3000)
     console.log("Connected")
 }).catch(err => {
     console.log(err)

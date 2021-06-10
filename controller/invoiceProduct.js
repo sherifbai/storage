@@ -15,11 +15,6 @@ exports.addInvoiceProduct = async (req, res, next) => {
 
     const errors = validationResult(req)
 
-    if (!errors.isEmpty()) {
-       const error = new Error('Провальная валидация')
-       error.statusCode = 422
-       throw error
-    }
 
     try {
         const incomingInvoice = await IncomingInvoice.findById(incomingInvoiceId)
@@ -188,4 +183,21 @@ const SumTotalAmount = async (incomingInvoiceId, incomingInvoice) => {
     incomingInvoice.amount = sum;
 
     await incomingInvoice.save();
+}
+
+exports.getInvoiceProducts = async (req, res , next) => {
+    try {
+        const invoiceProducts = await InvoiceProduct.find()
+
+        res.status(200).json({
+            success: true,
+            message: 'InvoiceProducts selected successfully',
+            data: invoiceProducts,
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
 }
