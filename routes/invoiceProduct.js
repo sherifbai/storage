@@ -1,13 +1,16 @@
 const {Router} = require('express')
 const {body} = require('express-validator')
 
+
 const isAuth = require('../middleware/isAuth')
 const invoiceProductController = require('../controller/invoiceProduct')
 
+
 const router = Router()
 
-router.get('/',isAuth , invoiceProductController.getInvoiceProducts)
 
+router.get('/:invoiceProductId', isAuth, invoiceProductController.getInvoiceProduct)
+router.get('/',isAuth , invoiceProductController.getInvoiceProducts)
 router.post('/add', [
     body('name')
         .trim()
@@ -32,8 +35,6 @@ router.post('/add', [
         .not()
         .isEmpty(),
 ], isAuth, invoiceProductController.addInvoiceProduct)
-
-
 router.put('/update/:id', [
     body('name')
         .trim()
@@ -58,8 +59,7 @@ router.put('/update/:id', [
         .not()
         .isEmpty(),
 ], isAuth, invoiceProductController.updateInvoiceProduct)
-
-
 router.delete('/delete/:id', isAuth, invoiceProductController.deleteInvoiceProduct)
+
 
 module.exports = router

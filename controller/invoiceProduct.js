@@ -191,8 +191,33 @@ exports.getInvoiceProducts = async (req, res , next) => {
 
         res.status(200).json({
             success: true,
-            message: 'InvoiceProducts selected successfully',
+            message: 'InvoiceProducts selected successfully!!!',
             data: invoiceProducts,
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.getInvoiceProduct = async (req, res, next) => {
+    const invoiceProductId = req.params.invoiceProductId
+
+    try {
+        const invoiceProduct = await InvoiceProduct.findById(invoiceProductId)
+
+        if (!invoiceProduct) {
+            const error = new Error('Данные не найдены!')
+            error.statusCode = 404
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: invoiceProduct,
+            message: 'Invoice Product selected successfully!!!'
         })
     } catch (error) {
         if (!error.statusCode) {
