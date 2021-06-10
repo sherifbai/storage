@@ -2,7 +2,9 @@ const Sale = require('../models/sale')
 const ProductCount = require('../models/productsCount')
 const InvoiceProduct = require('../models/invoiceProduct')
 
+
 const {validationResult} = require('express-validator')
+
 
 exports.addSale = async (req, res, next) => {
     const productId = req.body.productId
@@ -54,5 +56,44 @@ exports.addSale = async (req, res, next) => {
           error.statusCode = 500
        }
        next(error)
+    }
+}
+
+
+exports.getSales = async (req, res, next) => {
+    try {
+        const sales = await Sale.find()
+
+        res.status(200).json({
+            success: true,
+            data: sales
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+
+exports.getSale = async (req, res, next) => {
+    const saleId = req.params.saleId
+
+    try {
+        const sale = await Sale.findById(saleId)
+
+        if (!sale) {
+            const error = new Error('Данные не найдены!')
+            error.statusCode = 500
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: sale
+        })
+    } catch (error) {
+        
     }
 }

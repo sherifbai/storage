@@ -6,9 +6,13 @@ const saleController = require('../controller/sale')
 
 const router = Router()
 
-router.post('/', [
+
+router.get('/:saleId', isAuth, saleController.getSale)
+router.get('/', isAuth, saleController.getSales)
+router.post('/add', [
     body('quantity')
         .isNumeric()
 ], isAuth, saleController.addSale)
+
 
 module.exports = router
