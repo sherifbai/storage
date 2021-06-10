@@ -1,8 +1,10 @@
 const {Router} = require('express')
 const {body} = require('express-validator')
 
+
 const User = require('../models/user')
 const authController = require('../controller/auth')
+
 
 const router = Router()
 
@@ -26,7 +28,6 @@ router.post('/signup', [
         .not()
         .isEmpty()
 ], authController.signUp)
-
 router.post('/login', [
     body('login')
         .isLength({min: 5})

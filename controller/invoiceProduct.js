@@ -3,7 +3,9 @@ const IncomingInvoice = require('../models/incomingInvoice')
 const ProductsCount = require('../models/productsCount')
 const Sale = require('../models/sale')
 
+
 const {validationResult} = require('express-validator')
+
 
 exports.addInvoiceProduct = async (req, res, next) => {
     const name = req.body.name
@@ -58,6 +60,7 @@ exports.addInvoiceProduct = async (req, res, next) => {
         next(error)
     }
 }
+
 
 exports.updateInvoiceProduct = async (req, res, next) => {
     const invoiceProductId = req.params.id
@@ -119,6 +122,7 @@ exports.updateInvoiceProduct = async (req, res, next) => {
     }
 }
 
+
 exports.deleteInvoiceProduct = async (req, res, next) => {
     const invoiceProductId = req.params.id
 
@@ -161,6 +165,7 @@ exports.deleteInvoiceProduct = async (req, res, next) => {
     }
 }
 
+
 const saleCheck = async (invoiceProductId) => {
     const sale = await Sale.findOne({productId: invoiceProductId})
 
@@ -170,6 +175,7 @@ const saleCheck = async (invoiceProductId) => {
         return true
     }
 }
+
 
 const SumTotalAmount = async (incomingInvoiceId, incomingInvoice) => {
     const count = await InvoiceProduct.find({incomingInvoiceId: incomingInvoiceId}).countDocuments()
@@ -184,6 +190,7 @@ const SumTotalAmount = async (incomingInvoiceId, incomingInvoice) => {
 
     await incomingInvoice.save();
 }
+
 
 exports.getInvoiceProducts = async (req, res , next) => {
     try {
@@ -201,6 +208,7 @@ exports.getInvoiceProducts = async (req, res , next) => {
         next(error)
     }
 }
+
 
 exports.getInvoiceProduct = async (req, res, next) => {
     const invoiceProductId = req.params.invoiceProductId

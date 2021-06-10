@@ -1,5 +1,8 @@
 const IncomingInvoice = require('../models/incomingInvoice')
+
+
 const {validationResult} = require('express-validator')
+
 
 exports.addIncomingInvoice = async (req, res, next) => {
     const name = req.body.name
@@ -37,6 +40,7 @@ exports.addIncomingInvoice = async (req, res, next) => {
         next(error)
     }
 }
+
 
 exports.updateIncomingInvoice = async (req, res, next) => {
     const incomingInvoiceId = req.params.id
