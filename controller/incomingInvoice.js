@@ -1,4 +1,5 @@
 const IncomingInvoice = require('../models/incomingInvoice')
+const InvoiceProduct = require('../models/invoiceProduct')
 
 
 const {validationResult} = require('express-validator')
@@ -101,6 +102,8 @@ exports.deleteIncomingInvoice = async (req, res, next) => {
             throw error
         }
 
+        await productCheck(incomingInvoiceId)
+
         await IncomingInvoice.findByIdAndRemove(incomingInvoiceId)
 
         res.status(200).json({
@@ -156,5 +159,15 @@ exports.getIncomingInvoice = async (req, res, next) => {
             error.statusCode = 500
         }
         next(error)
+    }
+}
+
+const productCheck = async (incomingInvoiceId) => {
+    const product = await InvoiceProduct.findOne({incomingInvoiceId: incomingInvoiceId})
+
+    if (product) {
+        throw new Error('Вы не можете удалить или изменить данные')
+    } else {
+        return true
     }
 }
