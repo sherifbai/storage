@@ -2,6 +2,7 @@ const {Router} = require('express')
 const {body} = require('express-validator')
 
 
+const isAuth = require('../middleware/isAuth')
 const User = require('../models/user')
 const authController = require('../controller/auth')
 
@@ -9,6 +10,7 @@ const authController = require('../controller/auth')
 const router = Router()
 
 
+router.get('/', isAuth, authController.getUsers)
 router.post('/signup', [
     body('login')
         .isLength({min: 5})
