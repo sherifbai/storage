@@ -64,9 +64,15 @@ exports.getSales = async (req, res, next) => {
     try {
         const sales = await Sale.find()
 
+        console.log(sales)
+
+        const products = await Promise.all(sales.map(async (item) => {
+            return await InvoiceProduct.find({_id: item.productId});
+        }));
+
         res.status(200).json({
             success: true,
-            data: sales
+            data: { sales , products }
         })
     } catch (error) {
         if (!error.statusCode) {
