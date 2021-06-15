@@ -83,6 +83,8 @@ exports.getSale = async (req, res, next) => {
     try {
         const sale = await Sale.findById(saleId)
 
+        const product = await InvoiceProduct.findById(sale.productId)
+
         if (!sale) {
             const error = new Error('Данные не найдены!')
             error.statusCode = 500
@@ -91,7 +93,7 @@ exports.getSale = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            data: sale
+            data: {sale, product}
         })
     } catch (error) {
         
