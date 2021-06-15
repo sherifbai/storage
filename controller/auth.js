@@ -101,3 +101,27 @@ exports.getUsers = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.getUser = async (req, res, next) => {
+    const userId = req.params.userId
+
+    try {
+        const user = await User.findById(userId)
+
+        if (!user) {
+            const error = new Error('User not found')
+            error.statusCode = 404
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}

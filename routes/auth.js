@@ -11,6 +11,7 @@ const router = Router()
 
 
 router.get('/', isAuth, authController.getUsers)
+router.get('/:userId', isAuth, authController.getUser)
 router.post('/signup', [
     body('login')
         .isLength({min: 5})
