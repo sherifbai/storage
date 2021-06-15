@@ -1,5 +1,6 @@
 const IncomingInvoice = require('../models/incomingInvoice')
 const InvoiceProduct = require('../models/invoiceProduct')
+const ProductsCount = require('../models/productsCount')
 
 
 const {validationResult} = require('express-validator')
@@ -32,7 +33,7 @@ exports.addIncomingInvoice = async (req, res, next) => {
         res.status(201).json({
             success: true,
             message: 'Invoice created!',
-            data: null
+            data: incomingInvoice
         })
     } catch (error) {
         if (error.statusCode) {
@@ -102,7 +103,7 @@ exports.deleteIncomingInvoice = async (req, res, next) => {
             throw error
         }
 
-        await productCheck(incomingInvoiceId)
+        await deleteProduct(incomingInvoiceId)
 
         await IncomingInvoice.findByIdAndRemove(incomingInvoiceId)
 
@@ -162,6 +163,7 @@ exports.getIncomingInvoice = async (req, res, next) => {
     }
 }
 
+
 const productCheck = async (incomingInvoiceId) => {
     const product = await InvoiceProduct.findOne({incomingInvoiceId: incomingInvoiceId})
 
@@ -170,4 +172,24 @@ const productCheck = async (incomingInvoiceId) => {
     } else {
         return true
     }
+}
+
+
+const deleteProduct = async (incomingInvoiceId) => {
+    const products = await InvoiceProduct.find({incomingInvoiceId: incomingInvoiceId})
+    
+    await Promise.all(products.map(async (file) => {
+        await InvoiceProduct.findByIdAndRemove(file._id)
+
+        await deleteProductsCount(file._id)
+    }))
+}
+
+
+const deleteProductsCount = async (productId) => {
+    const products = await ProductsCount.find({productId: productId})
+    
+    await Promise.all(products.map(async (file) => {
+        await ProductsCount.findByIdAndRemove(file._id)
+    }))
 }
